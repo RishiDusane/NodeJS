@@ -1,32 +1,36 @@
-const express = require('express');
-const app = express();
+const http = require('http');
 
-app.use(express.static('public'));
+const server = http.createServer((req, res) => {
+    console.log("server is created");
 
-app.get('/home', (req, res) => {
-res.send('Welcome home');
+    res.setHeader('Content-Type', 'text/html');
+
+    if (req.url == '/') {
+        res.statusCode = 200;
+        res.end("<h1>Hello World</h1>");
+    }
+    else if (req.url == '/pizza') {
+        res.statusCode = 200;
+        res.end("<h1>This is your pizza</h1>");
+    }
+    else if (req.url == '/home') {
+        res.statusCode = 200;
+        res.end("<h1>Welcome home</h1>");
+    }
+    else if (req.url == '/about') {
+        res.statusCode = 200;
+        res.end("<h1>Welcome to About Us</h1>");
+    }
+    else if (req.url == '/node') {
+        res.statusCode = 200;
+        res.end("<h1>Welcome to my Node Js project</h1>");
+    }
+    else {
+        res.statusCode = 404;
+        res.end("<h1>Page Not Found</h1>");
+    }
 });
 
-app.get('/about', (req, res) => {
-res.send('Welcome to About Us');
-});
-
-app.get('/node', (req, res) => {
-res.send('Welcome to my Node Js project');
-});
-
-app.get('/', (req, res) => {
-res.send('Hello World');
-});
-
-app.get('/pizza', (req, res) => {
-res.send('This is your pizza');
-});
-
-app.use((req, res) => {
-res.status(404).send('Page Not Found');
-});
-
-app.listen(3000, () => {
-console.log('Server running at http://localhost:3000');
+server.listen(3000, () => {
+    console.log("server is running");
 });
